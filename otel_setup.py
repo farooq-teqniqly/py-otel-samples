@@ -1,5 +1,6 @@
 """OpenTelemetry setup utilities for configuring tracing, metrics, and
 logging."""
+
 from opentelemetry.sdk.resources import Resource
 from dataclasses import dataclass
 
@@ -7,6 +8,7 @@ from dataclasses import dataclass
 class OtelEnvironmentError(Exception):
     """Exception raised for errors related to OpenTelemetry environment
     configuration."""
+
     pass
 
 
@@ -14,6 +16,7 @@ class OtelEnvironmentError(Exception):
 class OtelEnvironment:
     """Dataclass to hold configuration settings for OpenTelemetry
     environment."""
+
     service_name: str = "unknown service"
     service_version: str = "1.0.0"
     otlp_endpoint: str = "http://localhost:4317"
@@ -21,10 +24,10 @@ class OtelEnvironment:
     insecure: bool = False
 
 
-def __create_resource(otel_environment):
+def __create_resource(otel_environment) -> Resource:
     resource = Resource.create(
         {
-            "serviceName": otel_environment.service_name,
+            "service.name": otel_environment.service_name,
             "service.version": otel_environment.service_version,
             "deployment.environment": otel_environment.deployment_environment,
         }
