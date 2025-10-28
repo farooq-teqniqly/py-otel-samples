@@ -9,7 +9,8 @@ class OtelEnvironmentError(Exception):
     """Exception raised for errors related to OpenTelemetry environment
     configuration."""
 
-    pass
+    def __init__(self, message="An OtelEnvironment instance is required"):
+        super().__init__(message)
 
 
 @dataclass(frozen=True)
@@ -46,7 +47,7 @@ def configure_logging(
         level (str | int): Logging level. Defaults to "INFO".
     """
     if otel_environment is None:
-        raise OtelEnvironmentError("An OtelEnvironment instance is required")
+        raise OtelEnvironmentError()
 
     import logging
     from opentelemetry._logs import set_logger_provider
@@ -86,7 +87,7 @@ def configure_metrics(
         MeterProvider: The configured meter provider.
     """
     if otel_environment is None:
-        raise OtelEnvironmentError("An OtelEnvironment instance is required")
+        raise OtelEnvironmentError()
 
     from opentelemetry.sdk.metrics import MeterProvider
     from opentelemetry.metrics import set_meter_provider
@@ -120,7 +121,7 @@ def configure_tracing(otel_environment: OtelEnvironment):
         Tracer: The tracer for the service.
     """
     if otel_environment is None:
-        raise OtelEnvironmentError("An OtelEnvironment instance is required")
+        raise OtelEnvironmentError()
 
     from opentelemetry import trace
     from opentelemetry.sdk.trace import TracerProvider
